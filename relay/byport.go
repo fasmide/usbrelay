@@ -15,6 +15,10 @@ func ByPort() (map[string]*Relay, error) {
 	relays := make(map[string]*Relay)
 
 	err := filepath.Walk("/sys/bus/usb/devices", func(p string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+
 		product, err := ioutil.ReadFile(path.Join(p, "idProduct"))
 		if err != nil {
 			return nil
